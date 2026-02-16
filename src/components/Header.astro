@@ -1,0 +1,114 @@
+---
+const navItems = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  {
+    name: 'Practice Areas',
+    href: '#',
+    dropdown: [
+      { name: 'Commercial Collections', href: '/practice-areas/commercial-collections' },
+      { name: 'Commercial Litigation', href: '/practice-areas/commercial-litigation' },
+    ]
+  },
+  { name: 'Contact', href: '/contact' },
+];
+---
+
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20">
+      <!-- Logo -->
+      <div class="flex-shrink-0 flex items-center">
+        <a href="/" class="text-2xl font-serif font-bold text-primary">
+          The CKB Firm
+        </a>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-8 items-center">
+        {navItems.map((item) => (
+          item.dropdown ? (
+            <div class="relative group">
+              <button class="text-slate-text hover:text-primary font-medium py-2 inline-flex items-center">
+                {item.name}
+                <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <!-- Bridge pseudo-element handled via padding-top on the dropdown container -->
+              <div class="absolute left-0 w-64 pt-2 hidden group-hover:block transition-opacity duration-200">
+                <div class="bg-white shadow-lg ring-1 ring-black/5 rounded-md overflow-hidden">
+                  {item.dropdown.map((subItem) => (
+                    <a href={subItem.href} class="block px-4 py-3 text-sm text-slate-text hover:bg-off-white hover:text-primary">
+                      {subItem.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a href={item.href} class="text-slate-text hover:text-primary font-medium">
+              {item.name}
+            </a>
+          )
+        ))}
+        <a href="/contact" class="bg-primary text-white px-5 py-2.5 rounded hover:bg-primary-dark transition-colors font-medium">
+          Client Portal
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex items-center md:hidden">
+        <button id="mobile-menu-btn" class="text-slate-text hover:text-primary p-2">
+          <span class="sr-only">Open menu</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Panel -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 hidden">
+    <div class="fixed inset-0 bg-black/25" id="mobile-backdrop"></div>
+    <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-white shadow-xl z-50 overflow-y-auto transition-transform transform">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-8">
+          <span class="text-xl font-serif font-bold text-primary">The CKB Firm</span>
+          <button id="close-menu-btn" class="text-slate-text">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="space-y-6">
+          <a href="/" class="block text-lg font-medium text-slate-text">Home</a>
+          <a href="/about" class="block text-lg font-medium text-slate-text">About</a>
+          <div class="space-y-3">
+            <span class="block text-lg font-medium text-primary border-b border-gray-100 pb-2">Practice Areas</span>
+            <a href="/practice-areas/commercial-collections" class="block pl-4 text-base text-slate-text">Commercial Collections</a>
+            <a href="/practice-areas/commercial-litigation" class="block pl-4 text-base text-slate-text">Commercial Litigation</a>
+          </div>
+          <a href="/contact" class="block text-lg font-medium text-slate-text">Contact</a>
+          <a href="#" class="block text-center mt-6 bg-accent text-white py-3 rounded font-bold uppercase text-sm tracking-wide">
+            Access Portal
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const closeBtn = document.getElementById('close-menu-btn');
+  const backdrop = document.getElementById('mobile-backdrop');
+
+  function toggleMenu() {
+    menu?.classList.toggle('hidden');
+  }
+
+  btn?.addEventListener('click', toggleMenu);
+  closeBtn?.addEventListener('click', toggleMenu);
+  backdrop?.addEventListener('click', toggleMenu);
+</script>

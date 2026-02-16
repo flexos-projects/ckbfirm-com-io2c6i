@@ -1,0 +1,37 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+  primaryBtn?: string;
+  primaryBtnLink?: string;
+  image?: string;
+}
+
+const { title, subtitle, primaryBtn = "Request Consultation", primaryBtnLink = "/contact", image } = Astro.props;
+---
+
+<section class="relative bg-primary overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    {image && <img src={image} alt="Legal office background" class="w-full h-full object-cover opacity-20" />}
+    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+    <div class="max-w-3xl">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white leading-tight mb-6">
+        {title}
+      </h1>
+      <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl leading-relaxed">
+        {subtitle}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href={primaryBtnLink} class="inline-flex justify-center items-center px-8 py-4 bg-accent text-primary-dark font-bold rounded hover:bg-accent-hover transition-all duration-200 shadow-lg">
+          {primaryBtn}
+        </a>
+        <a href="/about" class="inline-flex justify-center items-center px-8 py-4 border-2 border-white text-white font-medium rounded hover:bg-white/10 transition-all duration-200">
+          About The Firm
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTA from '../components/CTA.astro';
+
+const team = [
+  {
+    name: "Michael Baim",
+    role: "Managing Partner",
+    bio: "Michael leads the firm with a focus on integrating legal strategy with operational efficiency. He oversees the commercial litigation department and spearheads the firm's automation initiatives."
+  },
+  {
+    name: "Patricia Lepak",
+    role: "Partner",
+    bio: "Patricia brings extensive experience in creditors' rights and real estate law. She is dedicated to maintaining the quality relationships that are the cornerstone of the firm's success."
+  },
+  {
+    name: "Brian Berlin",
+    role: "Associate Attorney",
+    bio: "Brian specializes in commercial debt recovery and complex litigation, providing aggressive representation for the firm's diverse business clientele."
+  }
+];
+---
+
+<Layout 
+  title="About The Firm | Law Office Automation & History" 
+  description="Meet the team at The CKB Firm. We prioritize quality relationships and use cutting-edge technology to provide exceptional legal services to businesses."
+>
+  <section class="bg-primary text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-4xl md:text-5xl font-serif font-bold mb-6">About The CKB Firm</h1>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        A legacy of legal excellence, modernized for the future of business.
+      </p>
+    </div>
+  </section>
+
+  <!-- Mission & Philosophy -->
+  <section class="py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-serif font-bold text-primary mb-6">Our Philosophy</h2>
+        <p class="text-lg text-slate-text leading-relaxed mb-6">
+          The cornerstone of our success is the quality relationships which we maintain with our clients. We pride ourselves on the ability to tailor our legal representation to meet the diverse needs of our clients, from large financial institutions to local businesses.
+        </p>
+        <p class="text-lg text-slate-text leading-relaxed">
+          At The CKB Firm, we have created an atmosphere of excellence. As our harshest critics, we constantly strive to improve our firm and provide exceptional legal collection services on a consistent basis.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 mt-12">
+        <div class="bg-off-white p-8 rounded-lg">
+          <h3 class="text-xl font-bold text-primary mb-3">Law Office Automation</h3>
+          <p class="text-slate-text">
+            With an eye towards the future, we invest in the latest technology for the benefit of our clients. Our proprietary automation systems allow us to handle volume claims with the attention to detail typically reserved for boutique cases.
+          </p>
+        </div>
+        <div class="bg-off-white p-8 rounded-lg">
+          <h3 class="text-xl font-bold text-primary mb-3">Nationwide Network</h3>
+          <p class="text-slate-text">
+            While based in Chicago, our reach is national. We coordinate with a network of skilled attorneys across the country to ensure your judgments are enforced wherever assets are located.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="py-20 bg-off-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl font-serif font-bold text-primary text-center mb-12">Our Attorneys</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        {team.map((member) => (
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="bg-gray-200 h-64 w-full object-cover flex items-center justify-center text-gray-400">
+               <!-- Placeholder for Headshot -->
+               <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-primary">{member.name}</h3>
+              <p class="text-accent font-medium mb-4">{member.role}</p>
+              <p class="text-slate-text text-sm">
+                {member.bio}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</Layout>

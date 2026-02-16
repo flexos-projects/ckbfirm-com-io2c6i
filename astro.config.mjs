@@ -1,2 +1,11 @@
 import { defineConfig } from 'astro/config';
-export default defineConfig({ output: 'static' });
+import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  site: 'https://ckbfirm.com',
+  integrations: [sitemap()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
+});

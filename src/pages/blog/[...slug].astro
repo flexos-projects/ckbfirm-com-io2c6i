@@ -1,0 +1,68 @@
+---
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts.filter(p => p.id !== post.id).slice(0, 2);
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{post.data.title} | The CKB Firm</title>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #FBFBFB; color: #4A5568; line-height: 1.8; margin: 0; }
+    .article-container { max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem; }
+    header { margin-bottom: 3rem; text-align: center; }
+    .meta { color: #C5A059; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    h1 { font-family: 'Playfair Display', serif; color: #1B365D; font-size: 3rem; line-height: 1.2; margin: 1rem 0; }
+    .hero-img { width: 100%; border-radius: 4px; margin-bottom: 3rem; shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+    .content { font-size: 1.125rem; }
+    .content h2 { font-family: 'Playfair Display', serif; color: #1B365D; font-size: 2rem; margin-top: 2.5rem; }
+    .content ul { padding-left: 1.5rem; margin: 1.5rem 0; }
+    .content li { margin-bottom: 0.5rem; }
+    .footer-cta { background: #1B365D; color: white; padding: 3rem; border-radius: 4px; margin-top: 5rem; text-align: center; }
+    .footer-cta h3 { font-family: 'Playfair Display', serif; color: #C5A059; font-size: 1.75rem; margin-top: 0; }
+    .cta-button { display: inline-block; background: #C5A059; color: #1B365D; padding: 1rem 2rem; font-weight: 700; text-decoration: none; border-radius: 2px; margin-top: 1rem; }
+    .related { margin-top: 5rem; border-top: 1px solid #E2E8F0; padding-top: 3rem; }
+    .related-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <article class="article-container">
+    <header>
+      <div class="meta">{post.data.author} • {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+      <h1>{post.data.title}</h1>
+    </header>
+    
+    <img src={post.data.image} alt={post.data.title} class="hero-img" />
+    
+    <div class="content">
+      <Content />
+    </div>
+
+    <div class="footer-cta">
+      <h3>Ready to protect your interests?</h3>
+      <p>Contact our experienced Chicago legal team to discuss your commercial litigation or debt recovery needs.</p>
+      <a href="/contact" class="cta-button">Request a Consultation</a>
+    </div>
+
+    <section class="related">
+      <h2 style="font-family: 'Playfair Display', serif; color: #1B365D;">Related Insights</h2>
+      <div class="related-grid">
+        {relatedPosts.map(p => (
+          <div style="background: white; padding: 1.5rem; border-top: 3px solid #C5A059;">
+            <h4 style="margin: 0;"><a href={`/blog/${p.id}`} style="color: #1B365D; text-decoration: none;">{p.data.title}</a></h4>
+          </div>
+        ))}
+      </div>
+    </section>
+  </article>
+</body>
+</html>

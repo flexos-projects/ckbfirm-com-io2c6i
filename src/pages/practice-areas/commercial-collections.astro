@@ -1,0 +1,95 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+---
+
+<Layout 
+  title="Commercial Collections & Creditors' Rights | Illinois"
+  description="Aggressive and efficient commercial collection services. We specialize in creditors' rights, judgment enforcement, and asset recovery for banks and businesses."
+>
+  <section class="bg-primary text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <h1 class="text-4xl md:text-5xl font-serif font-bold mb-6">Commercial Collections</h1>
+      <p class="text-xl text-gray-300 max-w-3xl">
+        Maximizing recovery through aggressive representation and advanced technology.
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <div class="grid lg:grid-cols-3 gap-12">
+      <!-- Main Content -->
+      <div class="lg:col-span-2">
+        <h2 class="text-3xl font-serif font-bold text-primary mb-6">Creditors' Rights & Debt Recovery</h2>
+        <div class="prose prose-lg text-slate-text mb-8">
+          <p class="mb-4">
+            At The CKB Firm, we understand that unpaid debts directly impact your bottom line. Our commercial collections practice is designed to be both aggressive and compliant, utilizing the full extent of Illinois law to recover what you are owed.
+          </p>
+          <p class="mb-4">
+            We distinguish ourselves through <strong>Law Office Automation</strong>. This technology allows us to process high-volume claims for banks and financial institutions without sacrificing the personalized legal strategy required for complex contested matters.
+          </p>
+          
+          <h3 class="text-2xl font-serif font-bold text-primary mt-8 mb-4">Our Process</h3>
+          <ul class="list-disc pl-6 space-y-2 mb-6">
+            <li><strong>Pre-Suit Demand:</strong> Professional and firm communication to resolve debts before litigation.</li>
+            <li><strong>Litigation:</strong> Filing suit efficiently in Cook County and collar counties.</li>
+            <li><strong>Judgment Enforcement:</strong> We don't stop at the judgment. We utilize citations to discover assets, wage garnishments, and bank levies.</li>
+            <li><strong>Asset Discovery:</strong> Advanced skip-tracing to locate hidden assets.</li>
+          </ul>
+
+          <h3 class="text-2xl font-serif font-bold text-primary mt-8 mb-4">Industries Served</h3>
+          <p class="mb-4">
+            We maintain deep expertise in serving:
+          </p>
+          <ul class="grid md:grid-cols-2 gap-4">
+             <li class="bg-off-white p-3 rounded border-l-4 border-accent">Banking & Finance</li>
+             <li class="bg-off-white p-3 rounded border-l-4 border-accent">Manufacturing & Logistics</li>
+             <li class="bg-off-white p-3 rounded border-l-4 border-accent">Commercial Real Estate</li>
+             <li class="bg-off-white p-3 rounded border-l-4 border-accent">Construction Suppliers</li>
+          </ul>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mt-12">
+          <h3 class="text-2xl font-serif font-bold text-primary mb-6">Frequently Asked Questions</h3>
+          <div class="space-y-4">
+            <details class="bg-off-white p-4 rounded-lg group">
+              <summary class="font-bold text-primary cursor-pointer flex justify-between items-center">
+                What is the difference between a collection agency and a law firm?
+                <span class="transform group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p class="mt-4 text-slate-text">
+                Unlike agencies, The CKB Firm can file lawsuits, obtain judgments, and utilize court-ordered enforcement mechanisms like garnishments. We offer the legal authority agencies lack.
+              </p>
+            </details>
+            <details class="bg-off-white p-4 rounded-lg group">
+              <summary class="font-bold text-primary cursor-pointer flex justify-between items-center">
+                Do you handle out-of-state collections?
+                <span class="transform group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p class="mt-4 text-slate-text">
+                Yes. Through our nationwide network of attorneys, we can manage litigation and domestication of judgments across the United States while serving as your single point of contact.
+              </p>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="space-y-8">
+        <div class="bg-off-white p-6 rounded-lg shadow-sm">
+          <h3 class="text-xl font-bold text-primary mb-4">Related Practice Areas</h3>
+          <ul class="space-y-3">
+            <li><a href="/practice-areas/commercial-litigation" class="text-slate-text hover:text-accent flex items-center"><span class="mr-2">›</span> Commercial Litigation</a></li>
+            <li><a href="#" class="text-slate-text hover:text-accent flex items-center"><span class="mr-2">›</span> Real Estate Litigation</a></li>
+          </ul>
+        </div>
+
+        <div class="sticky top-24">
+          <h3 class="text-xl font-bold text-primary mb-4">Recover Your Assets</h3>
+          <ContactForm />
+        </div>
+      </aside>
+    </div>
+  </div>
+</Layout>

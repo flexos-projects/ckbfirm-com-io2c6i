@@ -1,171 +1,139 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import CTA from '../components/CTA.astro';
+
+const heroImage = "https://storage.googleapis.com/flexpertsdev-pb6ym6.appspot.com/phoenix/ckbfirm-com-io2c6i/hero.png";
 ---
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Resurrecting ckbfirm.com...</title>
-  <style>
-    :root { --brand: #8b5cf6; }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, sans-serif; background: #0a0a0f; color: #e2e8f0; min-height: 100vh; }
-    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
-    header { text-align: center; padding: 3rem 0 2rem; }
-    .logo { width: 56px; height: 56px; border-radius: 14px; background: color-mix(in srgb, var(--brand) 15%, transparent); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
-    .logo svg { width: 28px; height: 28px; stroke: var(--brand); }
-    h1 { font-size: 2rem; font-weight: 700; color: #fff; letter-spacing: -0.025em; }
-    .sub { color: #94a3b8; margin-top: .5rem; }
-    .timer { color: #475569; font-size: .8rem; margin-top: .25rem; font-variant-numeric: tabular-nums; }
-    .bar-wrap { height: 3px; background: #1e293b; border-radius: 2px; margin: 2rem 0 1.5rem; overflow: hidden; }
-    .bar-fill { height: 100%; background: var(--brand); width: 0%; transition: width .6s ease; border-radius: 2px; }
-    .phases { list-style: none; }
-    .phase { display: flex; align-items: center; gap: .75rem; padding: .65rem 0; border-bottom: 1px solid #1e293b40; font-size: .9rem; }
-    .dot { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 600; flex-shrink: 0; }
-    .p-wait .dot { background: #1e293b; color: #475569; }
-    .p-run .dot { background: color-mix(in srgb, var(--brand) 20%, transparent); color: var(--brand); animation: pulse 2s infinite; }
-    .p-done .dot { background: #064e3b; color: #34d399; }
-    .p-wait .label { color: #475569; }
-    .docs { margin-top: 2.5rem; display: none; }
-    .docs h2 { font-size: 1.15rem; color: #fff; margin-bottom: 1rem; }
-    .doc { background: #111827; border: 1px solid #1e293b; border-radius: 10px; margin-bottom: .75rem; overflow: hidden; }
-    .doc summary { padding: 1rem 1.25rem; cursor: pointer; font-weight: 500; color: var(--brand); list-style: none; display: flex; align-items: center; gap: .5rem; }
-    .doc summary::before { content: '\25B6'; font-size: .6rem; transition: transform .2s; }
-    .doc[open] summary::before { transform: rotate(90deg); }
-    .doc-body { padding: 0 1.25rem 1.25rem; color: #94a3b8; line-height: 1.7; font-size: .9rem; }
-    .doc-body h1,.doc-body h2,.doc-body h3 { color: #e2e8f0; margin: 1rem 0 .4rem; font-size: 1rem; }
-    .doc-body p { margin: .4rem 0; }
-    .doc-body ul,.doc-body ol { padding-left: 1.25rem; margin: .4rem 0; }
-    .doc-body code { background: #1e293b; padding: .1rem .3rem; border-radius: 3px; font-size: .85em; }
-    .doc-body pre { background: #1e293b; padding: .75rem; border-radius: 6px; overflow-x: auto; margin: .5rem 0; }
-    .doc-body pre code { background: none; padding: 0; }
-    .footer { text-align: center; padding: 3rem 0 2rem; color: #334155; font-size: .8rem; }
-    .footer a { color: var(--brand); text-decoration: none; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
-  </style>
-</head>
-<body>
-<div class="container">
-  <header>
-    <div class="logo"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-    <h1>Resurrecting ckbfirm.com</h1>
-    <p class="sub" id="subtitle">Your website is being rebuilt with AI</p>
-    <p class="timer" id="timer">0:00</p>
-  </header>
-  <div class="bar-wrap"><div class="bar-fill" id="bar"></div></div>
-  <ul class="phases" id="phases">
-    <li class="phase p-done" data-p="setup"><span class="dot">&#10003;</span><span class="label">Project created</span></li>
-    <li class="phase p-run" data-p="crawl"><span class="dot">2</span><span class="label">Crawling original site</span></li>
-    <li class="phase p-wait" data-p="analyze"><span class="dot">3</span><span class="label">Analyzing content &amp; design</span></li>
-    <li class="phase p-wait" data-p="images"><span class="dot">4</span><span class="label">Generating images</span></li>
-    <li class="phase p-wait" data-p="docs"><span class="dot">5</span><span class="label">Writing documentation</span></li>
-    <li class="phase p-wait" data-p="build"><span class="dot">6</span><span class="label">Building new site</span></li>
-    <li class="phase p-wait" data-p="deploy"><span class="dot">7</span><span class="label">Deploying to production</span></li>
-  </ul>
-  <div class="docs" id="docsWrap">
-    <h2>Project Documentation</h2>
-    <div id="docs"></div>
-  </div>
-  <div class="footer">Powered by <a href="https://flexos.dev">FlexOS</a></div>
-</div>
-<script>
-(function(){
-  var O='flexos-projects',R='ckbfirm-com-io2c6i';
-  var A='https://api.github.com/repos/'+O+'/'+R+'/contents/';
-  var DOCS=['000-import.md','001-vision.md','002-features.md','003-pages.md','004-database.md','005-flows.md','006-design.md','007-technical.md'];
-  var start=Date.now(),allDone=false,siteReady=false,loaded={};
 
-  /* Estimated seconds each phase completes at (cumulative from pipeline start).
-     Setup is already done. These are rough — the time-based ticker advances
-     phases so the user sees continuous motion instead of a stuck spinner. */
-  var schedule={
-    setup:0, crawl:30, analyze:90, images:140, docs:180, build:270, deploy:330
-  };
-  var keys=['setup','crawl','analyze','images','docs','build','deploy'];
+<Layout title="Commercial Litigation & Collections Attorney Chicago | The CKB Firm">
+  <Hero 
+    title="Modern Commercial Litigation & Debt Recovery Powered by Technology" 
+    subtitle="Fusing authoritative legal expertise with advanced automation to deliver efficient results for financial institutions and businesses in Chicago and nationwide."
+    image={heroImage}
+  />
 
-  function elapsed(){return Math.floor((Date.now()-start)/1000)}
+  <!-- Trust Indicators -->
+  <section class="py-12 bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Trusted by Financial Institutions & Businesses</p>
+      <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale">
+        <!-- Generic Association Placeholders using Text for reliability -->
+        <div class="text-xl font-serif font-bold text-gray-400">Illinois State Bar</div>
+        <div class="text-xl font-serif font-bold text-gray-400">Federal Bar Association</div>
+        <div class="text-xl font-serif font-bold text-gray-400">Chicago Bar Association</div>
+        <div class="text-xl font-serif font-bold text-gray-400">NARCA</div>
+      </div>
+    </div>
+  </section>
 
-  function fmt(s){return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)}
+  <!-- Practice Areas Grid -->
+  <section class="py-20 bg-off-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">Our Practice Areas</h2>
+        <p class="text-lg text-slate-text max-w-2xl mx-auto">
+          We pride ourselves on the ability to tailor our legal representation to meet the diverse needs of our clients.
+        </p>
+      </div>
 
-  function ck(p){return fetch(A+p).then(function(r){return r.ok}).catch(function(){return false})}
-  function raw(p){return fetch(A+p,{headers:{Accept:'application/vnd.github.v3.raw'}}).then(function(r){return r.ok?r.text():null}).catch(function(){return null})}
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
+          <div class="h-2 bg-primary group-hover:bg-accent transition-colors"></div>
+          <div class="p-8">
+            <div class="w-12 h-12 bg-primary/5 rounded-lg flex items-center justify-center mb-6 text-primary">
+               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3">Commercial Collections</h3>
+            <p class="text-slate-text mb-6">
+              Aggressive pre-suit to post-judgment enforcement. We specialize in creditors' rights and asset recovery for banks and businesses.
+            </p>
+            <a href="/practice-areas/commercial-collections" class="text-accent font-medium hover:text-primary transition-colors inline-flex items-center">
+              Learn more <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+          </div>
+        </div>
 
-  function md(s){
-    if(!s)return '';
-    return s.replace(/^---[\s\S]*?---\n*/,'')
-      .replace(/```[\s\S]*?```/g,function(m){return '<pre><code>'+m.slice(3,-3).replace(/^\w*\n/,'')+'</code></pre>'})
-      .replace(/^### (.*$)/gm,'<h3>$1</h3>')
-      .replace(/^## (.*$)/gm,'<h2>$1</h2>')
-      .replace(/^# (.*$)/gm,'<h1>$1</h1>')
-      .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g,'<em>$1</em>')
-      .replace(/`([^`]+)`/g,'<code>$1</code>')
-      .replace(/^- (.*$)/gm,'<li>$1</li>')
-      .replace(/\n\n/g,'<br><br>');
-  }
+        <!-- Card 2 -->
+        <div class="bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
+          <div class="h-2 bg-primary group-hover:bg-accent transition-colors"></div>
+          <div class="p-8">
+            <div class="w-12 h-12 bg-primary/5 rounded-lg flex items-center justify-center mb-6 text-primary">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3">Commercial Litigation</h3>
+            <p class="text-slate-text mb-6">
+              Expert representation for breach of contract, counterclaim defense, and complex business disputes in state and federal courts.
+            </p>
+            <a href="/practice-areas/commercial-litigation" class="text-accent font-medium hover:text-primary transition-colors inline-flex items-center">
+              Learn more <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+          </div>
+        </div>
 
-  function ui(){
-    var t=elapsed();
-    document.getElementById('timer').textContent=fmt(t);
+        <!-- Card 3 -->
+        <div class="bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
+          <div class="h-2 bg-primary group-hover:bg-accent transition-colors"></div>
+          <div class="p-8">
+            <div class="w-12 h-12 bg-primary/5 rounded-lg flex items-center justify-center mb-6 text-primary">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3">Real Estate Law</h3>
+            <p class="text-slate-text mb-6">
+              Navigating commercial real estate closings and litigation. We ensure your property interests are protected.
+            </p>
+            <a href="/contact" class="text-accent font-medium hover:text-primary transition-colors inline-flex items-center">
+              Contact us <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    /* Determine which phases are done based on time OR actual detection */
-    var done={};
-    keys.forEach(function(k){ if(t>=schedule[k]) done[k]=true; });
-    if(siteReady){ keys.forEach(function(k){ done[k]=true; }); }
+  <!-- The Automation Advantage -->
+  <section class="py-20 bg-primary text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6">The Automation Advantage</h2>
+          <p class="text-gray-300 text-lg mb-6">
+            The CKB Firm is at the forefront in law office automation. Unlike traditional firms, we invest heavily in the latest technology to drive efficiency, transparency, and results.
+          </p>
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-accent mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span class="text-gray-200">Accelerated debt recovery workflows</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-accent mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span class="text-gray-200">Real-time status updates for institutional clients</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-accent mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span class="text-gray-200">Cost-effective handling of volume litigation</span>
+            </li>
+          </ul>
+          <a href="/about" class="text-accent border-b border-accent pb-1 hover:text-white transition-colors inline-block">
+            Read more about our technology
+          </a>
+        </div>
+        <div class="relative">
+          <div class="absolute inset-0 bg-accent/20 transform translate-x-4 translate-y-4 rounded-lg"></div>
+          <div class="bg-primary-dark p-8 rounded-lg border border-white/10 relative">
+            <blockquote class="text-xl italic font-serif leading-relaxed">
+              "At The CKB Firm, we have created an atmosphere of excellence. As our harshest critics, we constantly strive to improve our firm and provide exceptional legal collection services on a consistent basis."
+            </blockquote>
+            <div class="mt-6">
+              <cite class="not-italic font-bold text-white">Michael Baim</cite>
+              <span class="block text-sm text-accent">Managing Partner</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    var n=0;
-    keys.forEach(function(k){if(done[k])n++});
-    document.getElementById('bar').style.width=Math.round(n/keys.length*100)+'%';
-
-    document.querySelectorAll('.phase').forEach(function(el){
-      var p=el.dataset.p;
-      if(done[p]){el.className='phase p-done';el.querySelector('.dot').innerHTML='\u2713'}
-    });
-    var set=false;
-    keys.forEach(function(k){
-      if(!done[k]&&!set){
-        var el=document.querySelector('[data-p="'+k+'"]');
-        if(el&&el.className.indexOf('p-done')<0){el.className='phase p-run';set=true}
-      }
-    });
-    if(siteReady&&!allDone){
-      document.getElementById('subtitle').textContent='Your new site is ready! Reloading...';
-      allDone=true;
-      setTimeout(function(){location.reload()},4000);
-    }
-
-    /* Render any docs we've fetched */
-    var dk=Object.keys(loaded).sort();
-    if(dk.length>0){
-      document.getElementById('docsWrap').style.display='block';
-      document.getElementById('docs').innerHTML=dk.map(function(k){
-        var t=k.replace(/^\d+-/,'').replace('.md','').replace(/-/g,' ');
-        t=t.charAt(0).toUpperCase()+t.slice(1);
-        return '<details class="doc"><summary>'+t+'</summary><div class="doc-body">'+md(loaded[k])+'</div></details>';
-      }).join('');
-    }
-  }
-
-  /* Poll GitHub every 12s to detect actual completion + fetch docs */
-  async function poll(){
-    if(allDone)return;
-    var hasSite=await ck('src/components/Header.astro');
-    if(hasSite) siteReady=true;
-    /* Try loading core docs (they appear in the same commit) */
-    for(var j=0;j<DOCS.length;j++){
-      if(loaded[DOCS[j]])continue;
-      var c=await raw('.flexos/docs/core/'+DOCS[j]);
-      if(c)loaded[DOCS[j]]=c;
-    }
-    ui();
-    if(!allDone)setTimeout(poll,12000);
-  }
-
-  /* Tick the timer + time-based phases every 3 seconds */
-  function tick(){ui();if(!allDone)setTimeout(tick,3000)}
-
-  tick();
-  setTimeout(poll,20000);
-})();
-<\/script>
-</body>
-</html>
+  <CTA />
+</Layout>
