@@ -1,0 +1,171 @@
+---
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resurrecting ckbfirm.com...</title>
+  <style>
+    :root { --brand: #8b5cf6; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #0a0a0f; color: #e2e8f0; min-height: 100vh; }
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+    header { text-align: center; padding: 3rem 0 2rem; }
+    .logo { width: 56px; height: 56px; border-radius: 14px; background: color-mix(in srgb, var(--brand) 15%, transparent); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+    .logo svg { width: 28px; height: 28px; stroke: var(--brand); }
+    h1 { font-size: 2rem; font-weight: 700; color: #fff; letter-spacing: -0.025em; }
+    .sub { color: #94a3b8; margin-top: .5rem; }
+    .timer { color: #475569; font-size: .8rem; margin-top: .25rem; font-variant-numeric: tabular-nums; }
+    .bar-wrap { height: 3px; background: #1e293b; border-radius: 2px; margin: 2rem 0 1.5rem; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--brand); width: 0%; transition: width .6s ease; border-radius: 2px; }
+    .phases { list-style: none; }
+    .phase { display: flex; align-items: center; gap: .75rem; padding: .65rem 0; border-bottom: 1px solid #1e293b40; font-size: .9rem; }
+    .dot { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 600; flex-shrink: 0; }
+    .p-wait .dot { background: #1e293b; color: #475569; }
+    .p-run .dot { background: color-mix(in srgb, var(--brand) 20%, transparent); color: var(--brand); animation: pulse 2s infinite; }
+    .p-done .dot { background: #064e3b; color: #34d399; }
+    .p-wait .label { color: #475569; }
+    .docs { margin-top: 2.5rem; display: none; }
+    .docs h2 { font-size: 1.15rem; color: #fff; margin-bottom: 1rem; }
+    .doc { background: #111827; border: 1px solid #1e293b; border-radius: 10px; margin-bottom: .75rem; overflow: hidden; }
+    .doc summary { padding: 1rem 1.25rem; cursor: pointer; font-weight: 500; color: var(--brand); list-style: none; display: flex; align-items: center; gap: .5rem; }
+    .doc summary::before { content: '\25B6'; font-size: .6rem; transition: transform .2s; }
+    .doc[open] summary::before { transform: rotate(90deg); }
+    .doc-body { padding: 0 1.25rem 1.25rem; color: #94a3b8; line-height: 1.7; font-size: .9rem; }
+    .doc-body h1,.doc-body h2,.doc-body h3 { color: #e2e8f0; margin: 1rem 0 .4rem; font-size: 1rem; }
+    .doc-body p { margin: .4rem 0; }
+    .doc-body ul,.doc-body ol { padding-left: 1.25rem; margin: .4rem 0; }
+    .doc-body code { background: #1e293b; padding: .1rem .3rem; border-radius: 3px; font-size: .85em; }
+    .doc-body pre { background: #1e293b; padding: .75rem; border-radius: 6px; overflow-x: auto; margin: .5rem 0; }
+    .doc-body pre code { background: none; padding: 0; }
+    .footer { text-align: center; padding: 3rem 0 2rem; color: #334155; font-size: .8rem; }
+    .footer a { color: var(--brand); text-decoration: none; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+    <h1>Resurrecting ckbfirm.com</h1>
+    <p class="sub" id="subtitle">Your website is being rebuilt with AI</p>
+    <p class="timer" id="timer">0:00</p>
+  </header>
+  <div class="bar-wrap"><div class="bar-fill" id="bar"></div></div>
+  <ul class="phases" id="phases">
+    <li class="phase p-done" data-p="setup"><span class="dot">&#10003;</span><span class="label">Project created</span></li>
+    <li class="phase p-run" data-p="crawl"><span class="dot">2</span><span class="label">Crawling original site</span></li>
+    <li class="phase p-wait" data-p="analyze"><span class="dot">3</span><span class="label">Analyzing content &amp; design</span></li>
+    <li class="phase p-wait" data-p="images"><span class="dot">4</span><span class="label">Generating images</span></li>
+    <li class="phase p-wait" data-p="docs"><span class="dot">5</span><span class="label">Writing documentation</span></li>
+    <li class="phase p-wait" data-p="build"><span class="dot">6</span><span class="label">Building new site</span></li>
+    <li class="phase p-wait" data-p="deploy"><span class="dot">7</span><span class="label">Deploying to production</span></li>
+  </ul>
+  <div class="docs" id="docsWrap">
+    <h2>Project Documentation</h2>
+    <div id="docs"></div>
+  </div>
+  <div class="footer">Powered by <a href="https://flexos.dev">FlexOS</a></div>
+</div>
+<script>
+(function(){
+  var O='flexos-projects',R='ckbfirm-com-io2c6i';
+  var A='https://api.github.com/repos/'+O+'/'+R+'/contents/';
+  var DOCS=['000-import.md','001-vision.md','002-features.md','003-pages.md','004-database.md','005-flows.md','006-design.md','007-technical.md'];
+  var start=Date.now(),allDone=false,siteReady=false,loaded={};
+
+  /* Estimated seconds each phase completes at (cumulative from pipeline start).
+     Setup is already done. These are rough — the time-based ticker advances
+     phases so the user sees continuous motion instead of a stuck spinner. */
+  var schedule={
+    setup:0, crawl:30, analyze:90, images:140, docs:180, build:270, deploy:330
+  };
+  var keys=['setup','crawl','analyze','images','docs','build','deploy'];
+
+  function elapsed(){return Math.floor((Date.now()-start)/1000)}
+
+  function fmt(s){return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)}
+
+  function ck(p){return fetch(A+p).then(function(r){return r.ok}).catch(function(){return false})}
+  function raw(p){return fetch(A+p,{headers:{Accept:'application/vnd.github.v3.raw'}}).then(function(r){return r.ok?r.text():null}).catch(function(){return null})}
+
+  function md(s){
+    if(!s)return '';
+    return s.replace(/^---[\s\S]*?---\n*/,'')
+      .replace(/```[\s\S]*?```/g,function(m){return '<pre><code>'+m.slice(3,-3).replace(/^\w*\n/,'')+'</code></pre>'})
+      .replace(/^### (.*$)/gm,'<h3>$1</h3>')
+      .replace(/^## (.*$)/gm,'<h2>$1</h2>')
+      .replace(/^# (.*$)/gm,'<h1>$1</h1>')
+      .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g,'<em>$1</em>')
+      .replace(/`([^`]+)`/g,'<code>$1</code>')
+      .replace(/^- (.*$)/gm,'<li>$1</li>')
+      .replace(/\n\n/g,'<br><br>');
+  }
+
+  function ui(){
+    var t=elapsed();
+    document.getElementById('timer').textContent=fmt(t);
+
+    /* Determine which phases are done based on time OR actual detection */
+    var done={};
+    keys.forEach(function(k){ if(t>=schedule[k]) done[k]=true; });
+    if(siteReady){ keys.forEach(function(k){ done[k]=true; }); }
+
+    var n=0;
+    keys.forEach(function(k){if(done[k])n++});
+    document.getElementById('bar').style.width=Math.round(n/keys.length*100)+'%';
+
+    document.querySelectorAll('.phase').forEach(function(el){
+      var p=el.dataset.p;
+      if(done[p]){el.className='phase p-done';el.querySelector('.dot').innerHTML='\u2713'}
+    });
+    var set=false;
+    keys.forEach(function(k){
+      if(!done[k]&&!set){
+        var el=document.querySelector('[data-p="'+k+'"]');
+        if(el&&el.className.indexOf('p-done')<0){el.className='phase p-run';set=true}
+      }
+    });
+    if(siteReady&&!allDone){
+      document.getElementById('subtitle').textContent='Your new site is ready! Reloading...';
+      allDone=true;
+      setTimeout(function(){location.reload()},4000);
+    }
+
+    /* Render any docs we've fetched */
+    var dk=Object.keys(loaded).sort();
+    if(dk.length>0){
+      document.getElementById('docsWrap').style.display='block';
+      document.getElementById('docs').innerHTML=dk.map(function(k){
+        var t=k.replace(/^\d+-/,'').replace('.md','').replace(/-/g,' ');
+        t=t.charAt(0).toUpperCase()+t.slice(1);
+        return '<details class="doc"><summary>'+t+'</summary><div class="doc-body">'+md(loaded[k])+'</div></details>';
+      }).join('');
+    }
+  }
+
+  /* Poll GitHub every 12s to detect actual completion + fetch docs */
+  async function poll(){
+    if(allDone)return;
+    var hasSite=await ck('src/components/Header.astro');
+    if(hasSite) siteReady=true;
+    /* Try loading core docs (they appear in the same commit) */
+    for(var j=0;j<DOCS.length;j++){
+      if(loaded[DOCS[j]])continue;
+      var c=await raw('.flexos/docs/core/'+DOCS[j]);
+      if(c)loaded[DOCS[j]]=c;
+    }
+    ui();
+    if(!allDone)setTimeout(poll,12000);
+  }
+
+  /* Tick the timer + time-based phases every 3 seconds */
+  function tick(){ui();if(!allDone)setTimeout(tick,3000)}
+
+  tick();
+  setTimeout(poll,20000);
+})();
+<\/script>
+</body>
+</html>
